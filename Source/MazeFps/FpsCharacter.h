@@ -28,6 +28,11 @@ private:
 	float velocity{ 10 };
 	UPROPERTY(Editanywhere)
 	float mouseSensivity{4};
+	UPROPERTY(Editanywhere)
+	int health = 100;
+	UPROPERTY(Editanywhere)
+	int stamina = 100;
+
 	UPROPERTY(VisibleAnywhere)
 	FVector movementDirection;
 	APlayerController* playerController;
@@ -36,7 +41,6 @@ private:
 
 
 	void OnForwardAction(float delta);
-
 	void OnRightAction(float delta);
 
 

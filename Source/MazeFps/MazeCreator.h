@@ -19,6 +19,7 @@ private:
 	TArray<UStaticMesh*>meshes; //1,2,3,4 doors
 	UWorld* world;
 	bool isFirst = 1;
+	FVector2D firstRoomIndex;
 	AMazeRoom* GetMazeWithIndex(FVector2D _ind);
 	void GoNewRoom(AMazeRoom* targetRoom);
 

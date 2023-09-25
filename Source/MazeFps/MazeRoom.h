@@ -88,7 +88,9 @@ private:
 	TArray<FWall> walls;
 	UPROPERTY(VisibleAnywhere)
 	FVector2D index;
+	UPROPERTY(VisibleAnywhere)
 	AMazeRoom* preRoom = nullptr;
+	UPROPERTY(VisibleAnywhere)
 	AMazeRoom* nextRoom = nullptr;
 
 	UPROPERTY(VisibleAnywhere)

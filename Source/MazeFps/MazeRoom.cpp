@@ -29,8 +29,8 @@ AMazeRoom::AMazeRoom()
 
 
 	walls.Add(frontWall);
-	walls.Add(backWall);
 	walls.Add(rightWall);
+	walls.Add(backWall);
 	walls.Add(leftWall);
 
 
@@ -73,33 +73,37 @@ void AMazeRoom::SetWall(EWallDirection direction, EWallStats wallStats)
 void AMazeRoom::UpdateDoors()
 {
 
+	meshComponent_front->SetStaticMesh(meshes.Last());
+	meshComponent_front->SetRelativeRotation(FRotator(0, 270, 0));
 
+	meshComponent_right->SetStaticMesh(meshes.Last());
+	meshComponent_right->SetRelativeRotation(FRotator(0, 0, 0));
 
-	if (walls[0].stats != EWallStats::Way)
+	meshComponent_back->SetStaticMesh(meshes.Last());
+	meshComponent_back->SetRelativeRotation(FRotator(0, 90, 0));
+
+	meshComponent_left->SetStaticMesh(meshes.Last());
+	meshComponent_left->SetRelativeRotation(FRotator(0, 180, 0));
+	if (walls[0].stats == EWallStats::Way)
 	{
-		meshComponent_front->SetStaticMesh(meshes.Last());
-		// (Pitch=0.000000,Yaw=270.000000,Roll=0.000000)
-		meshComponent_front->SetRelativeRotation(FRotator(0, 270, 0));
+		meshComponent_front->SetVisibility(0);
+		meshComponent_front->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 
 	}
-	if (walls[1].stats != EWallStats::Way)
+	if (walls[1].stats == EWallStats::Way)
 	{
-		meshComponent_right->SetStaticMesh(meshes.Last());
-		meshComponent_right->SetRelativeRotation(FRotator(0, 0, 0));
-
-		// (Pitch=0.000000,Yaw=0.000000,Roll=0.000000)
+		meshComponent_right->SetVisibility(0);
+		meshComponent_right->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	}
-	if (walls[2].stats != EWallStats::Way)
-	{
-		meshComponent_back->SetStaticMesh(meshes.Last());
-		meshComponent_back->SetRelativeRotation(FRotator(0, 90, 0));
-		// (Pitch=0.000000,Yaw=90.000122,Roll=0.000000)
+	if (walls[2].stats == EWallStats::Way)
+	{		
+		meshComponent_back->SetVisibility(0);
+		meshComponent_back->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	}
-	if (walls[3].stats != EWallStats::Way)
+	if (walls[3].stats == EWallStats::Way)
 	{
-		meshComponent_left->SetStaticMesh(meshes.Last());
-		meshComponent_left->SetRelativeRotation(FRotator(0, 180, 0));
-		// (Pitch=0.000000,Yaw=180.000198,Roll=0.000000)
+		meshComponent_left->SetVisibility(0);
+		meshComponent_left->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	}
 	UE_LOG(LogTemp, Warning, TEXT("%s"), *this->GetName());
 	UE_LOG(LogTemp, Warning, TEXT("%s"), *("Front : " + meshComponent_front->GetRelativeLocation().ToString()));
@@ -162,21 +166,21 @@ FVector2D AMazeRoom::NeighbourRoom(EWallDirection selectedWall)
 	FVector2D newInd;
 	switch (selectedWall) {
 	case EWallDirection::Front: {
-		newInd = index + FVector2D(0, -1);
-		break;
-	}
-	case EWallDirection::Right: {
 		newInd = index + FVector2D(1, 0);
 		break;
 	}
+	case EWallDirection::Right: {
+		newInd = index + FVector2D(0, 1);
+		break;
+	}
 	case EWallDirection::Back:{
-		newInd = index + FVector2D(0, +1);
+		newInd = index + FVector2D(-1,0);
 		break;
 	}
 	case EWallDirection::Left:
 
 	{
-		newInd = index + FVector2D(-1, 0);
+		newInd = index + FVector2D(0, -1);
 		break;
 	}
 	case EWallDirection::NotValid:

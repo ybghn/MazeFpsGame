@@ -12,7 +12,8 @@ MazeCreator::MazeCreator(int _size, UWorld* _world, TArray<UStaticMesh*>_meshes)
 	meshes = _meshes;
 
 	Create();
-	AMazeRoom* initialMaze = GetMazeWithIndex(FVector2D(0, 0));
+	 firstRoomIndex = FVector2D(FMath::RandRange(0, size - 1),FMath::RandRange(0, size - 1));
+	AMazeRoom* initialMaze = GetMazeWithIndex(firstRoomIndex);
 	initialMaze->SetVisited();
 	GoNewRoom(initialMaze);
 
@@ -71,7 +72,7 @@ void MazeCreator::GoNewRoom(AMazeRoom* targetRoom)
 	if (!isFirst)
 	{
 
-		if (targetRoom->GetIndex() == FVector2D(0, 0))
+		if (targetRoom->GetIndex() == firstRoomIndex)
 		{
 			if (!targetRoom->HaveEmptyWall())
 			{
@@ -134,7 +135,7 @@ void MazeCreator::GoNewRoom(AMazeRoom* targetRoom)
 
 			}
 
-			newRoom->SetWall(newDirection, EWallStats::Wall);
+			newRoom->SetWall(newDirection, EWallStats::Way);
 			newRoom->SetVisited(1);
 			targetRoom->SetNextRoom(newRoom);
 			newRoom->SetPreRoom(targetRoom);
